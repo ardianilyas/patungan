@@ -11,13 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('topups', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id')->constrained('users');
-            $table->string('external_id');
+            $table->uuid('transactionable_id');
+            $table->string('transactionable_type');
+            $table->string('type');
             $table->integer('amount');
             $table->string('status')->default('pending');
-            $table->timestamp('paid_at')->nullable();
+            $table->string('payment_id')->nullable();
+            $table->string('payment_method')->nullable();
+            $table->string('payment_channel')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('topups');
+        Schema::dropIfExists('transactions');
     }
 };

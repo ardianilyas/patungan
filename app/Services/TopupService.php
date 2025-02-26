@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Topup;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -31,6 +32,14 @@ class TopupService
         ]);
     }
 
+    public function createTransaction(Topup $topup) {
+        return $topup->transaction()->create([
+            'user_id' => Auth::user()->id,
+            'amount' => $topup->amount,
+            'type' => 'topup'
+        ]);
+    }
+
     public function createInvoice($amount) {
         $external_id = 'Topup-' . uniqid();
 
@@ -48,9 +57,10 @@ class TopupService
         try {
             DB::beginTransaction();
             $invoice = $this->api->createInvoice($create_invoice_request);
-            DB::commit();
 
-            $this->createTopup($external_id, $amount);
+            $topup = $this->createTopup($external_id, $amount);
+            $transation = $this->createTransaction($topup);
+            DB::commit();
 
             Log::info('Invoice accepted', (array)$invoice['invoice_url']);
             return $invoice;
@@ -96,6 +106,17 @@ class TopupService
                     'amount' => $amount,
                     'paid_at' => now()
                 ]);
+
+                $transaction = Transaction::query()->where('transactionable_id', $topup->id)->first();
+
+                $transaction->update([
+                    'status' => 'paid',
+                    'payment_id' => $payload['payment_id'],
+                    'payment_method' => $payload['payment_method'],
+                    'payment_channel' => $payload['payment_channel'],
+                ]);
+
+                Log::info('Transaction updated', (array)$transaction);
 
                 $user = User::query()->where('id', $topup->user_id)->first();
 
