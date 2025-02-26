@@ -51,4 +51,8 @@ class User extends Authenticatable
     public function topups(): HasMany {
         return $this->hasMany(Topup::class);
     }
+
+    public function transactions(): HasMany {
+        return $this->hasMany(Transaction::class);
+    }
 }

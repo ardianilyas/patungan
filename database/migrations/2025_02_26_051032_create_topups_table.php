@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('external_id');
             $table->integer('amount');
             $table->string('status')->default('pending');
-            $table->timestamp('paid_at')->nullable();
+            $table->dateTime('paid_at')->nullable();
             $table->timestamps();
         });
     }

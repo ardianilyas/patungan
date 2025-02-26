@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Topup;
 use App\Models\Transaction;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -104,7 +105,7 @@ class TopupService
                 $topup->update([
                     'status' => 'paid',
                     'amount' => $amount,
-                    'paid_at' => now()
+                    'paid_at' => Carbon::parse($payload['paid_at'])->toDateTimeString(),
                 ]);
 
                 $transaction = Transaction::query()->where('transactionable_id', $topup->id)->first();
@@ -114,6 +115,7 @@ class TopupService
                     'payment_id' => $payload['payment_id'],
                     'payment_method' => $payload['payment_method'],
                     'payment_channel' => $payload['payment_channel'],
+                    'paid_at' => Carbon::parse($payload['paid_at'])->toDateTimeString(),
                 ]);
 
                 Log::info('Transaction updated', (array)$transaction);

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('transactionable_type');
             $table->string('type');
             $table->integer('amount');
+            $table->dateTime('paid_at')->nullable();
             $table->string('status')->default('pending');
             $table->string('payment_id')->nullable();
             $table->string('payment_method')->nullable();

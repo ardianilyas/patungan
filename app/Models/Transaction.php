@@ -14,6 +14,10 @@ class Transaction extends Model
 
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'paid_at' => 'datetime: j F Y, H:i:s',
+    ];
+
     public function transactionable(): MorphTo {
         return $this->morphTo();
     }
