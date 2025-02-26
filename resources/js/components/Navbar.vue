@@ -16,7 +16,7 @@
           <NavbarLink :is-active="false" href="/about">About</NavbarLink>
         </li>
         <li v-if="isAuthenticated">
-          <NavbarLink :is-active="route().current('login.*')" :href="route('login')">Topup</NavbarLink>
+          <NavbarLink :is-active="route().current('topup.*')" :href="route('topup.index')">Topup</NavbarLink>
         </li>
         <li v-if="isAuthenticated">
           <NavbarLink :is-active="route().current('dashboard.*')" :href="route('dashboard')">Dashboard</NavbarLink>
