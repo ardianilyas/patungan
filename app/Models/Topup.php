@@ -15,7 +15,7 @@ class Topup extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
-        'created_at' => 'datetime: j F Y, H:i:s',
+        'paid_at' => 'datetime: j F Y, H:i:s',
     ];
 
     public function user(): BelongsTo {

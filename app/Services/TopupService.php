@@ -88,10 +88,13 @@ class TopupService
         if($status === 'PAID') {
             try {
                 DB::beginTransaction();
+
                 $topup = Topup::query()->where('external_id', $external_id)->first();
+
                 $topup->update([
                     'status' => 'paid',
-                    'amount' => $amount
+                    'amount' => $amount,
+                    'paid_at' => now()
                 ]);
 
                 $user = User::query()->where('id', $topup->user_id)->first();
