@@ -14,6 +14,7 @@
           Status :
           <span v-if="topup.status === 'paid'" class="text-green-600">{{ topup.status }}</span>
           <span v-if="topup.status === 'failed'" class="text-red-500">{{ topup.status }}</span>
+          <span v-if="topup.status === 'pending'" class="text-yellow-400">{{ topup.status }}</span>
         </h4>
       </div>
     </div>
