@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard\TopupControler as DashboardTopupController;
 use App\Http\Controllers\TopupController;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,10 @@ Route::get('dashboard', function () {
 Route::middleware('auth')->group(function () {
    Route::get('/topup', [TopupController::class, 'index'])->name('topup.index');
    Route::post('/topup', [TopupController::class, 'store'])->name('topup.store');
+});
+
+Route::middleware('auth')->prefix('dashboard')->name('dashboard.')->group(function () {
+   Route::get('/topup', [DashboardTopupController::class, 'index'])->name('topup.index');
 });
 
 // Webhook routes

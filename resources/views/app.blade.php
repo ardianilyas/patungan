@@ -11,7 +11,7 @@
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
         @routes
         @vite(['resources/js/app.ts'])
@@ -19,7 +19,7 @@
     </head>
     <style>
         body {
-            font-family: "DM Sans", serif;
+            font-family: "Albert Sans", serif;
         }
     </style>
     <body class="bg-gray-50 selection:bg-lime-400 antialiased">

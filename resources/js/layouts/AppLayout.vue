@@ -13,6 +13,12 @@ withDefaults(defineProps<Props>(), {
 
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
+        <h3 class="text-2xl text-neutral-800 font-medium">
+          <slot name="title" />
+        </h3>
+        <p class="text-neutral-600 leading-relaxed">
+          <slot name="subtitle" />
+        </p>
         <slot />
     </AppLayout>
 </template>
