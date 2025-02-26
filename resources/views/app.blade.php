@@ -9,11 +9,20 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
 
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+
         @routes
         @vite(['resources/js/app.ts'])
         @inertiaHead
     </head>
-    <body class="font-sans bg-gray-50 selection:bg-lime-400 antialiased">
+    <style>
+        body {
+            font-family: "DM Sans", serif;
+        }
+    </style>
+    <body class="bg-gray-50 selection:bg-lime-400 antialiased">
         @inertia
     </body>
 </html>

@@ -8,17 +8,20 @@
           <XIcon v-else />
         </button>
       </div>
-      <ul class="w-full justify-end mt-3 md:mt-0 md:flex flex-col md:flex-row gap-2" :class="isOpen ? 'flex' : 'hidden' ">
+      <ul class="w-full justify-end mt-3 md:mt-0 md:flex flex-col md:flex-row gap-3" :class="isOpen ? 'flex' : 'hidden' ">
         <li>
           <NavbarLink :is-active="route().current('home')" :href="route('home')">Home</NavbarLink>
         </li>
         <li>
           <NavbarLink :is-active="false" href="/about">About</NavbarLink>
         </li>
-        <li v-if="$page.props.auth.user">
+        <li v-if="isAuthenticated">
+          <NavbarLink :is-active="route().current('login.*')" :href="route('login')">Topup</NavbarLink>
+        </li>
+        <li v-if="isAuthenticated">
           <NavbarLink :is-active="route().current('dashboard.*')" :href="route('dashboard')">Dashboard</NavbarLink>
         </li>
-        <li v-if="!$page.props.auth.user">
+        <li v-if="!isAuthenticated">
           <NavbarLink :is-active="route().current('login.*')" :href="route('login')">Login</NavbarLink>
         </li>
       </ul>
@@ -31,6 +34,9 @@ import { Link } from '@inertiajs/vue3'
 import { MenuIcon, XIcon } from "lucide-vue-next";
 import {ref} from "vue";
 import NavbarLink from "@/components/NavbarLink.vue";
+import { useAuth } from "@/composables/useAuth";
+
+const { user, isAuthenticated } = useAuth()
 
 const isOpen = ref(false);
 
