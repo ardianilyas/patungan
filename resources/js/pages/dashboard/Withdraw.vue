@@ -35,7 +35,6 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import InputError from '@/components/InputError.vue';
 import { toast } from 'vue-sonner';
-import {ref} from "vue";
 
 const { user } = useAuth();
 
