@@ -12,7 +12,7 @@
         <h4 class="font-medium text-neutral-800"> Paid at : {{ topup.paid_at }}</h4>
         <h4 class="font-medium text-neutral-800">
           Status :
-          <span v-if="topup.status === 'paid'" class="text-green-600">{{ topup.status }}</span>
+          <span v-if="topup.status === 'success'" class="text-green-600">{{ topup.status }}</span>
           <span v-if="topup.status === 'failed'" class="text-red-500">{{ topup.status }}</span>
           <span v-if="topup.status === 'pending'" class="text-yellow-400">{{ topup.status }}</span>
         </h4>
