@@ -4,9 +4,9 @@
         <template #title>Withdraw</template>
         <template #subtitle>You can withdraw your current balance here.</template>
 
-        <p class="inline-flex py-2 px-5 bg-blue-200 text-sm text-blue-700 rounded-md shadow-sm shadow-blue-100">Info : payment will be processed between 7.00 AM until 11.00 PM. Otherwise it will be processed next day</p>
+        <p class="mt-3 font-medium inline-flex py-2 px-5 bg-blue-200 text-sm text-blue-700 rounded-md shadow-sm shadow-blue-100">Info : payment will be processed between 7.00 AM until 11.00 PM. Otherwise it will be processed next day</p>
 
-        <div class="mt-6 max-w-3xl rounded-md bg-white p-6 shadow-md">
+        <div class="mt-4 max-w-3xl rounded-md bg-white p-6 shadow-md">
             <h4 class="text-lg text-neutral-800">
                 Your current balance is : <b>{{ formatIDR(user.balance) }}</b>
             </h4>
@@ -15,12 +15,11 @@
                     <Label>Amount</Label>
                     <Input v-model="form.amount" placeholder="100000" />
                     <InputError v-if="form.errors.amount" :message="form.errors.amount" />
-                    <p class="text-sm text-neutral-600">Note that the tax is Rp. 4000</p>
+                    <p class="mt-2 text-sm text-neutral-600">Note that the tax is Rp. 4000</p>
                 </div>
                 <div>
                     <Button type="submit" :disabled="form.processing">Withdraw</Button>
                 </div>
-
             </form>
         </div>
     </AppLayout>

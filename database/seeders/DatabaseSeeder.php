@@ -42,7 +42,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => $datetime,
             ]);
 
-            if ($topup->status === 'success') {
+            if ($topup->status === 'paid') {
                 $user->balance += $topup->amount;
                 $user->save();
                 $topup->paid_at = $datetime;
