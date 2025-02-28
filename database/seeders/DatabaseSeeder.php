@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
 
         $topups = Topup::factory(15)->create();
 
+        $this->call(BankSeeder::class);
+
         foreach ($topups as $topup) {
 
             $randomDate = collect([

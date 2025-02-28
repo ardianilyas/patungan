@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\Dashboard\BankAccountController;
 use App\Http\Controllers\Dashboard\TopupControler as DashboardTopupController;
 use App\Http\Controllers\Dashboard\TransactionController;
 use App\Http\Controllers\Dashboard\WithdrawController;
 use App\Http\Controllers\TopupController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -23,6 +25,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->prefix('dashboard')->name('dashboard.')->group(function () {
+    Route::get('/bank-account', [BankAccountController::class, 'index'])->name('bank-account.index');
+    Route::post('/bank-account', [BankAccountController::class, 'store'])->name('bank-account.store');
     Route::get('/withdraw', [WithdrawController::class, 'index'])->name('withdraw.index');
     Route::post('/withdraw', [WithdrawController::class, 'withdraw'])->name('withdraw.store');
     Route::get('/topup', [DashboardTopupController::class, 'index'])->name('topup.index');

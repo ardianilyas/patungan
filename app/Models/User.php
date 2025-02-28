@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -54,5 +55,9 @@ class User extends Authenticatable
 
     public function transactions(): HasMany {
         return $this->hasMany(Transaction::class);
+    }
+
+    public function bank(): HasOne {
+        return $this->hasOne(UserBank::class);
     }
 }
