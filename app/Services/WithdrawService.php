@@ -41,10 +41,16 @@ class WithdrawService
         $withdraw['channel_code'] = $data['channel_code'];
         $withdraw['channel_category'] = $data['channel_category'];
 
+        $user = User::query()->where('id', $withdraw['user_id'])->first();
+
         if ($data['status'] === 'SUCCEEDED') {
-            $withdraw['status'] = 'success';
+            $withdraw['status'] = $data['status'];
+            Log::info('Withdraw status success', $data);
         } elseif ($data['status'] === 'FAILED') {
-            $withdraw['status'] = 'failed';
+            $withdraw['status'] = $data['status'];
+            $user['balance'] += $withdraw['amount'] + 4000;
+            $user->save();
+            Log::error('Withdraw status failed: ', (array)$data['failure_code']);
         }
 
         $withdraw->save();
@@ -102,7 +108,7 @@ class WithdrawService
         } catch (XenditSdkException $e) {
             DB::rollBack();
             Log::error('Error creating payout: ' . $e->getMessage());
-            return back()->withErrors(['message' => 'Error creating payout, check your bank credentials.']);
+            return back()->withErrors(['message' => $e->getMessage()]);
         }
     }
 
@@ -121,13 +127,13 @@ class WithdrawService
 
             $withdraw = $this->findWithdrawByReferenceId($data['reference_id']);
 
-            if ($withdraw['status'] !== 'success') {
+            if ($withdraw['status'] !== $data['status']) {
                 $updatedWithdraw = $this->updateWithdraw($withdraw, $data);
                 $transaction = $this->createTransaction($updatedWithdraw, $data);
-                Log::info('Withdraw processed: ', [$updatedWithdraw, $transaction]);
+                Log::info('Transaction created: ', [$transaction]);
+            } else {
+                Log::info('Withdraw already have success status');
             }
-
-            Log::info('Withdraw already have success status');
 
             DB::commit();
         } catch (\Exception $e) {
