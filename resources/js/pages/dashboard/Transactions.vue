@@ -14,11 +14,10 @@
             <span class="inline-flex justify-center items-center bg-violet-200 text-violet-600 p-2 w-10 h-10 rounded-md shadow-sm" v-if="transaction.type === 'withdraw'">W</span>
           </div>
           <div>
-<!--            {{ transaction.status }}-->
             <p class="font-medium">
-              <span class="text-sm px-3 rounded-full bg-green-200 text-green-600" v-if="transaction.status === 'success' ">success</span>
+              <span class="text-sm px-3 rounded-full bg-green-200 text-green-600" v-if="transaction.status === 'success' || transaction.status === 'SUCCEEDED' ">success</span>
               <span class="text-sm px-3 rounded-full bg-yellow-200 text-yellow-600" v-if="transaction.status === 'pending' ">pending</span>
-              <span class="text-sm px-3 rounded-full bg-red-200 text-red-600" v-if="transaction.status === 'failed' ">failed</span>
+              <span class="text-sm px-3 rounded-full bg-red-200 text-red-600" v-if="transaction.status === 'failed' || transaction.status === 'FAILED' ">failed</span>
             </p>
             <h4 class="text-neutral-800 font-medium">{{ transaction.id }}</h4>
             <p class="text-sm font-medium text-neutral-500">{{ formatIDR(transaction.amount) }}</p>
