@@ -114,18 +114,20 @@ class WithdrawService
     public function handleWebhook(array $payload) {
         $data = $payload['data'];
 
-        Log::info('Webhook received: ', (array)$payload);
+        Log::info('Webhook received: ', $payload);
 
         try {
             Db::beginTransaction();
 
             $withdraw = $this->findWithdrawByReferenceId($data['reference_id']);
 
-            $updatedWithdraw = $this->updateWithdraw($withdraw, $data);
+            if ($withdraw['status'] !== 'success') {
+                $updatedWithdraw = $this->updateWithdraw($withdraw, $data);
+                $transaction = $this->createTransaction($updatedWithdraw, $data);
+                Log::info('Withdraw processed: ', [$updatedWithdraw, $transaction]);
+            }
 
-            $transaction = $this->createTransaction($updatedWithdraw, $data);
-
-            Log::info('Withdraw processed: ', [$updatedWithdraw, $transaction]);
+            Log::info('Withdraw already have success status');
 
             DB::commit();
         } catch (\Exception $e) {
