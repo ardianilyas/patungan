@@ -26,8 +26,8 @@ class WithdrawController extends Controller
 
         $amountAfterTax = $request->amount - 4000;
 
-        if ($userBalance < $amountAfterTax) {
-            return back()->withErrors(['amount' => 'Insufficient balance for tax : Rp. 4000.']);
+        if ($userBalance < $request->amount) {
+            return back()->withErrors(['amount' => 'Insufficient balance']);
         }
 
         $data['amount'] = (int)$amountAfterTax;
