@@ -103,7 +103,7 @@ class TopupService
                 $topup = Topup::query()->where('external_id', $external_id)->first();
 
                 $topup->update([
-                    'status' => 'paid',
+                    'status' => 'success',
                     'amount' => $amount,
                     'paid_at' => Carbon::parse($payload['paid_at'])->toDateTimeString(),
                 ]);
@@ -111,7 +111,7 @@ class TopupService
                 $transaction = Transaction::query()->where('transactionable_id', $topup->id)->first();
 
                 $transaction->update([
-                    'status' => 'paid',
+                    'status' => 'success',
                     'payment_id' => $payload['payment_id'],
                     'payment_method' => $payload['payment_method'],
                     'payment_channel' => $payload['payment_channel'],
