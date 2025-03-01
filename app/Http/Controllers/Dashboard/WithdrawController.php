@@ -23,7 +23,10 @@ class WithdrawController extends Controller
     }
 
     public function withdraw(WithdrawRequest $request) {
-        $userBalance = Auth::user()->balance;
+        $user = Auth::user();
+        $userBalance = $user->balance;
+        $account_holder_name = $user->bank->account_holder_name;
+        $account_number = $user->bank->account_number;
 
         $amountAfterTax = $request->amount - 4000;
 
@@ -33,8 +36,8 @@ class WithdrawController extends Controller
 
         $data['amount'] = (int)$amountAfterTax;
         $data['actual_amount'] = $request->amount;
-        $data['account_holder_name'] = 'Ardian Ilyas';
-        $data['account_number'] = '00004444';
+        $data['account_holder_name'] = $account_holder_name;
+        $data['account_number'] = $account_number;
 
         $this->withdrawService->withdraw($data);
 

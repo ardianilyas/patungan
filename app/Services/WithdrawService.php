@@ -45,7 +45,7 @@ class WithdrawService
 
         if ($data['status'] === 'SUCCEEDED') {
             $withdraw['status'] = $data['status'];
-            Log::info('Withdraw status success', $data);
+            Log::info('Withdraw status success: ', $data);
         } elseif ($data['status'] === 'FAILED') {
             $withdraw['status'] = $data['status'];
             $user['balance'] += $withdraw['amount'] + 4000;
@@ -101,7 +101,7 @@ class WithdrawService
             Log::info('User balance updated: ', [$user]);
 
             $result = $api->createPayout($idempotency_key, '', $payload);
-            Log::info('Payout created : ', [$result, $user]);
+            Log::info('Payout created: ', [$result, $user]);
 
             DB::commit();
             return 0;

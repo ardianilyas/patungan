@@ -118,7 +118,7 @@ class TopupService
                     'paid_at' => Carbon::parse($payload['paid_at'])->toDateTimeString(),
                 ]);
 
-                Log::info('Transaction updated', (array)$transaction);
+                Log::info('Transaction updated: ', (array)$transaction);
 
                 $user = User::query()->where('id', $topup->user_id)->first();
 
@@ -128,10 +128,10 @@ class TopupService
                 $user->save();
 
                 DB::commit();
-                Log::info("User balance updated", [$user['email'], $user['balance']]);
+                Log::info("User balance updated: ", [$user['email'], $user['balance']]);
             } catch (\Exception $e) {
                 DB::rollBack();
-                Log::info('Error processing webhook', (array)$e->getMessage());
+                Log::info('Error processing webhook: ', (array)$e->getMessage());
             }
         }
     }
