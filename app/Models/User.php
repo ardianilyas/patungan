@@ -49,6 +49,13 @@ class User extends Authenticatable
         ];
     }
 
+    public function getTotalSuccessfulTopupsAttribute()
+    {
+        return $this->topups()
+            ->whereIn('status', ['success', 'paid'])  // Adjust 'success' to match your actual status value
+            ->sum('amount');
+    }
+
     public function topups(): HasMany {
         return $this->hasMany(Topup::class);
     }
