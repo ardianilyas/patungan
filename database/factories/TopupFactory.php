@@ -21,7 +21,7 @@ class TopupFactory extends Factory
             'user_id' => User::all()->random()->id,
             'external_id' => 'Topup-' . uniqid(),
             'amount' => rand(10000, 200000),
-            'status' => $this->faker->randomElement(['pending', 'paid', 'failed']),
+            'status' => $this->faker->randomElement(['pending', 'success', 'failed']),
         ];
     }
 }

@@ -17,6 +17,7 @@ class Topup extends Model
 
     protected $casts = [
         'paid_at' => 'datetime: j F Y, H:i:s',
+        'created_at' => 'datetime: j F Y, H:i:s',
     ];
 
     public function user(): BelongsTo {

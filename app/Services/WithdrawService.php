@@ -64,6 +64,7 @@ class WithdrawService
             'amount' => $withdraw['amount'],
             'status' => $withdraw['status'],
             'payment_channel' => $data['channel_category'],
+            'payment_method' => 'bank_transfer',
         ]);
     }
 
