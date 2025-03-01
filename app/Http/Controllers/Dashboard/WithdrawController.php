@@ -18,7 +18,8 @@ class WithdrawController extends Controller
     }
 
     public function index() {
-        return inertia('dashboard/Withdraw');
+        $isHaveBankAccount = Auth::user()->bank()->exists();
+        return inertia('dashboard/Withdraw', compact('isHaveBankAccount'));
     }
 
     public function withdraw(WithdrawRequest $request) {
