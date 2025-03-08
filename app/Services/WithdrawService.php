@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Events\WithdrawalProcessed;
 use App\Models\User;
 use App\Models\Withdraw;
 use Illuminate\Support\Facades\DB;
@@ -130,6 +131,7 @@ class WithdrawService
 
             if ($withdraw['status'] !== $data['status']) {
                 $updatedWithdraw = $this->updateWithdraw($withdraw, $data);
+                event(new WithdrawalProcessed($updatedWithdraw));
                 $transaction = $this->createTransaction($updatedWithdraw, $data);
                 Log::info('Transaction created: ', [$transaction]);
             } else {

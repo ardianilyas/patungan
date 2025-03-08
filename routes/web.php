@@ -1,10 +1,13 @@
 <?php
 
+use App\Events\WithdrawalProcessed;
 use App\Http\Controllers\Dashboard\BankAccountController;
 use App\Http\Controllers\Dashboard\TopupControler as DashboardTopupController;
 use App\Http\Controllers\Dashboard\TransactionController;
 use App\Http\Controllers\Dashboard\WithdrawController;
 use App\Http\Controllers\TopupController;
+use App\Mail\WithdrawalNotification;
+use App\Models\Withdraw;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -31,6 +34,11 @@ Route::middleware('auth')->prefix('dashboard')->name('dashboard.')->group(functi
     Route::post('/withdraw', [WithdrawController::class, 'withdraw'])->name('withdraw.store');
     Route::get('/topup', [DashboardTopupController::class, 'index'])->name('topup.index');
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+});
+
+// Email preview for testing
+Route::get('/email-preview', function () {
+
 });
 
 // Webhook routes
