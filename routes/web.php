@@ -1,16 +1,11 @@
 <?php
 
-use App\Events\WithdrawalProcessed;
 use App\Http\Controllers\Dashboard\BankAccountController;
 use App\Http\Controllers\Dashboard\TopupControler as DashboardTopupController;
 use App\Http\Controllers\Dashboard\TransactionController;
 use App\Http\Controllers\Dashboard\WithdrawController;
+use App\Http\Controllers\DonationController;
 use App\Http\Controllers\TopupController;
-use App\Mail\WithdrawalNotification;
-use App\Models\Withdraw;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -26,6 +21,9 @@ Route::middleware('auth')->group(function () {
    Route::get('/topup', [TopupController::class, 'index'])->name('topup.index');
    Route::post('/topup', [TopupController::class, 'store'])->name('topup.store');
 });
+
+Route::get('/donate/{name}', [DonationController::class, 'index'])->name('donation.index')->middleware('auth');
+Route::post('/donate/{name}', [DonationController::class, 'donate'])->name('donation.donate')->middleware('auth');
 
 Route::middleware('auth')->prefix('dashboard')->name('dashboard.')->group(function () {
     Route::get('/bank-account', [BankAccountController::class, 'index'])->name('bank-account.index');

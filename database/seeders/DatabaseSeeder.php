@@ -16,9 +16,19 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $user = User::factory()->create([
-            'name' => 'Ardian Ilyas',
+            'name' => 'ardianilyas',
             'email' => 'ardian@patungan.com',
+            'password' => bcrypt('developer'),
         ]);
+
+        User::factory()->create([
+            'name' => 'dummy',
+            'email' => 'dummy@patungan.com',
+            'password' => bcrypt('password'),
+        ]);
+
+        $user->balance += 12500000;
+        $user->save();
 
         $topups = Topup::factory(15)->create();
 
@@ -44,7 +54,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => $datetime,
             ]);
 
-            if ($topup->status === 'paid') {
+            if ($topup->status === 'success') {
                 $user->balance += $topup->amount;
                 $user->save();
                 $topup->paid_at = $datetime;
