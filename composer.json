@@ -16,6 +16,7 @@
         "laravel/telescope": "^5.5",
         "laravel/tinker": "^2.10.1",
         "opcodesio/log-viewer": "^3.15",
+        "predis/predis": "^2.3",
         "tightenco/ziggy": "^2.4",
         "xendit/xendit-php": "^6.2"
     },
