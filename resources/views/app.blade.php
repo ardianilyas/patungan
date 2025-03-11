@@ -22,7 +22,7 @@
             font-family: "Albert Sans", serif;
         }
     </style>
-    <body class="bg-gray-50 selection:bg-lime-400 antialiased">
+    <body class="selection:bg-lime-400 antialiased">
         @inertia
     </body>
 </html>

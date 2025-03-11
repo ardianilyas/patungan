@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\DonationSent;
 use App\Http\Requests\DonationRequest;
 use App\Models\Donation;
 use App\Models\User;
@@ -58,6 +59,8 @@ class DonationController extends Controller
             Log::info("Creator {$creator->name} balance updated: ", [$creator]);
 
             DB::commit();
+
+            event(new DonationSent($request->message, $creator, $sender, $request->amount));
 
             return back();
         } catch (\Exception $e) {

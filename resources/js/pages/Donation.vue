@@ -39,7 +39,7 @@ const props = defineProps({
   creator: Object
 })
 
-const { user } = useAuth()
+const { user } = useAuth();
 
 const form = useForm({
   amount: 0,

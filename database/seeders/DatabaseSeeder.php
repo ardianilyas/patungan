@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Topup;
+use Carbon\Carbon;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Carbon\Carbon;
+use App\Models\Topup;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,6 +20,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'ardianilyas',
             'email' => 'ardian@patungan.com',
             'password' => bcrypt('developer'),
+            'token' => Str::random(),
         ]);
 
         User::factory()->create([

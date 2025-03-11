@@ -1,11 +1,14 @@
 <?php
 
+use App\Events\DonationSent;
+use App\Events\TestEvent;
 use App\Http\Controllers\Dashboard\BankAccountController;
 use App\Http\Controllers\Dashboard\TopupControler as DashboardTopupController;
 use App\Http\Controllers\Dashboard\TransactionController;
 use App\Http\Controllers\Dashboard\WithdrawController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\TopupController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -37,6 +40,17 @@ Route::middleware('auth')->prefix('dashboard')->name('dashboard.')->group(functi
 // Email preview for testing
 Route::get('/email-preview', function () {
 
+});
+
+Route::get('/test', function () {
+    $receiver = User::first();
+    event(new DonationSent("Hallo, have a nice day", $receiver, $receiver, 20000));
+    event(new DonationSent("Hallo, have a nice day", $receiver, $receiver, 20000));
+    event(new DonationSent("Hallo, have a nice day", $receiver, $receiver, 20000));
+});
+
+Route::get('/overlay/{token}', function ($token) {
+    return inertia('Overlay', compact('token'));
 });
 
 // Webhook routes
