@@ -67,4 +67,8 @@ class User extends Authenticatable
     public function bank(): HasOne {
         return $this->hasOne(UserBank::class);
     }
+
+    public function donations(): HasMany {
+        return $this->hasMany(Donation::class, 'receiver_id');
+    }
 }

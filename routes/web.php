@@ -3,6 +3,7 @@
 use App\Events\DonationSent;
 use App\Http\Controllers\Dashboard\BankAccountController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\DonationHistoryController;
 use App\Http\Controllers\Dashboard\TopupControler as DashboardTopupController;
 use App\Http\Controllers\Dashboard\TransactionController;
 use App\Http\Controllers\Dashboard\WithdrawController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\TopupController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/', function () {
     return Inertia::render('Welcome');
@@ -29,6 +31,7 @@ Route::post('/donate/{name}', [DonationController::class, 'donate'])->name('dona
 Route::middleware('auth')->prefix('dashboard')->name('dashboard.')->group(function () {
     Route::get('/bank-account', [BankAccountController::class, 'index'])->name('bank-account.index');
     Route::post('/bank-account', [BankAccountController::class, 'store'])->name('bank-account.store');
+    Route::get('/donations', [DonationHistoryController::class, 'index'])->name('donations.index');
     Route::get('/withdraw', [WithdrawController::class, 'index'])->name('withdraw.index');
     Route::post('/withdraw', [WithdrawController::class, 'withdraw'])->name('withdraw.store');
     Route::get('/topup', [DashboardTopupController::class, 'index'])->name('topup.index');
