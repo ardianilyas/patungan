@@ -44,7 +44,7 @@ class DonationSent implements ShouldBroadcast
     public function broadcastWith(): array {
         $formattedAmount = 'Rp. ' . number_format($this->amount, '0', ',', '.');
         return [
-            'title' => "{$this->sender->name} has been donated {$formattedAmount}",
+            'title' => "<strong>{$this->sender->name}</strong> has been donated <strong>{$formattedAmount}</strong>",
             'message' => $this->message,
         ];
     }

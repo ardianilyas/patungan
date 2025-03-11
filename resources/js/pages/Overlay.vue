@@ -4,8 +4,8 @@
         <transition name="fade">
             <div v-if="showNotification" id="notification" 
                  class="my-12 mx-4 bg-blue-100 p-8 text-center text-blue-900 rounded-md shadow-md shadow-blue-200">
-                <div class="text-3xl font-medium">{{ currentTitle }}</div>
-                <div class="text-xl mt-2">{{ currentMessage }}</div>
+                <div class="text-2xl" v-html="currentTitle"></div>
+                <div class="text-2xl mt-2">{{ currentMessage }}</div>
                 <!-- <div v-if="messageQueue.length > 0" class="text-sm mt-2">
                     ({{ messageQueue.length }} more in queue)
                 </div> -->
@@ -16,7 +16,6 @@
 
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
-import { useAuth } from '@/composables/useAuth';
 import { onMounted, ref } from 'vue';
 
 // Define an interface for the notification object
@@ -29,7 +28,13 @@ const props = defineProps({
     token: String
 });
 
-console.log(props.token);
+const notificationSound = new Audio('/coin.mp3')
+
+const playSound = () => {
+    notificationSound.play().catch(error => {
+        console.log('Error playing sound: ' + error);
+    });
+}
 
 const showNotification = ref(false);
 const currentTitle = ref('');
@@ -37,10 +42,10 @@ const currentMessage = ref('');
 const messageQueue = ref<Notification[]>([]);
 const isProcessing = ref(false);
 
-const { user } = useAuth();
-
 const displayNextMessage = () => {
     if (messageQueue.value.length > 0 && !isProcessing.value) {
+        playSound();
+
         isProcessing.value = true;
         const nextNotification = messageQueue.value.shift() || { title: '', message: '' };
         currentTitle.value = nextNotification.title;
@@ -52,7 +57,7 @@ const displayNextMessage = () => {
             setTimeout(() => {
                 isProcessing.value = false;
                 displayNextMessage();
-            }, 1000);
+            }, 500);
         }, 5000);
     }
 };
@@ -63,6 +68,7 @@ const queueMessage = (title: string, message: string) => {
 };
 
 onMounted(() => {
+    notificationSound.load();
     window.Echo.channel(`donation.${props.token}`).listen("DonationSent", (e: any) => {
         console.log(e);
         // Assuming e has title and message properties
