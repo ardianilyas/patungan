@@ -27,6 +27,9 @@ class DonationController extends Controller
             return back()->withErrors(['amount' => 'Insufficient balance']);
         }
 
+        $tax = $request->amount * 0.05;
+        $amountAfterTax = $request->amount - $tax;
+
         DB::beginTransaction();
         try {
 
@@ -34,7 +37,8 @@ class DonationController extends Controller
             $donation = Donation::query()->create([
                 'sender_id' => $sender->id,
                 'receiver_id' => $creator->id,
-                'amount' => $request->amount,
+                'actual_amount' => $request->amount,
+                'amount_after_tax' => $amountAfterTax,
                 'message' => $request->message,
                 'status' => 'success'
             ]);
@@ -54,7 +58,7 @@ class DonationController extends Controller
             Log::info("Sender {$sender->name} balance updated: ", [$sender]);
 
             // update creator balance (increment)
-            $creator->balance += $request->amount;
+            $creator->balance += $amountAfterTax;
             $creator->save();
             Log::info("Creator {$creator->name} balance updated: ", [$creator]);
 
